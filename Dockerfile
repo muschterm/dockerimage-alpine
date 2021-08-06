@@ -6,10 +6,12 @@ RUN apk add --no-cache \
         "su-exec" \
         "sudo" \
         "curl" \
+        "git" \
         "zsh" \
         "openssh-client" \
         "jq"; \
     rm -rf ~/.cache; \
+    chmod 755 /etc/sudoers.d; \
 # --add-dotfiles------------------------------------
     git clone https://github.com/muschterm/dotfiles.git -b main; \
     mkdir "/opt/dotfiles"; \
