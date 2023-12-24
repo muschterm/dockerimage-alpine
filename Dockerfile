@@ -1,18 +1,18 @@
-ARG build_version=3.14.1
+ARG build_version=3.19.0
 FROM alpine:${build_version}
 LABEL maintainer "Matthew Muschter <muschterm@linux.com>"
 
 RUN apk add --no-cache \
-        "su-exec" \
-        "sudo" \
-        "curl" \
-        "git" \
-        "zsh" \
-        "openssh-client" \
-        "jq"; \
+    "su-exec" \
+    "sudo" \
+    "curl" \
+    "git" \
+    "zsh" \
+    "openssh-client" \
+    "jq"; \
     rm -rf ~/.cache; \
     chmod 755 /etc/sudoers.d; \
-# --add-dotfiles------------------------------------
+    # --add-dotfiles------------------------------------
     git clone https://github.com/muschterm/dotfiles.git -b main; \
     mkdir "/opt/dotfiles"; \
     mv "dotfiles/init" "/opt/dotfiles/"; \
@@ -28,8 +28,9 @@ RUN apk add --no-cache \
     chmod 755 /opt/dotfiles/docker-scripts/*; \
     chmod 755 /usr/local/bin/docker-build; \
     chmod 755 /usr/local/bin/print-arch; \
-    chmod 755 /usr/local/bin/print-distro;
-# --add-dotfiles------------------------------------
+    chmod 755 /usr/local/bin/print-distro; \
+    # --add-dotfiles------------------------------------
+    printf -- "Finshed run...\n";
 
 ENTRYPOINT [ "/opt/dotfiles/docker-scripts/docker-entrypoint.sh" ]
 CMD [ "/bin/zsh", "--login" ]

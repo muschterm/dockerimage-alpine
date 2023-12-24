@@ -8,13 +8,13 @@ Build Instructions
 
 There is a `docker-build` script in `muschterm/dotfiles.git` that assists with building, tagging, and pushing this image to `hub.docker.com`.
 
-### 3.14.1 - latest
+### 3.19.0 - latest
 
 ```
-docker-build --tag-latest muschterm/alpine:3.14.1
+docker-build --tag-latest muschterm/alpine:3.19.0
 ```
 
-### 3.13.5
+### 3.18.5
 
 ```
 docker-build muschterm/alpine:3.13.5
