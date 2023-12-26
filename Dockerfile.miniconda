@@ -1,0 +1,12 @@
+ARG build_version=3.19.0
+FROM muschterm/alpine-glibc:${build_version}-2.35-r1
+ARG build_suffix=latest
+LABEL maintainer "Matthew Muschter <muschterm@linux.com>"
+
+RUN curl -so "miniconda.sh" "https://repo.anaconda.com/miniconda/Miniconda3-${build_suffix}-Linux-$(uname -m).sh"; \
+    zsh miniconda.sh -b -p /opt/miniconda; \
+    /opt/miniconda/bin/conda config --add channels conda-forge; \
+    /opt/miniconda/bin/conda config --add channels anaconda; \
+    ln -s /opt/miniconda/etc/profile.d/conda.sh /etc/profile.d/conda.sh; \
+    rm -rf ~/.cache; \
+    rm "miniconda.sh";

@@ -12,7 +12,9 @@ RUN apk add --no-cache \
     "jq"; \
     rm -rf ~/.cache; \
     chmod 755 /etc/sudoers.d; \
+    \
     # --add-dotfiles------------------------------------
+    \
     git clone https://github.com/muschterm/dotfiles.git -b main; \
     mkdir "/opt/dotfiles"; \
     mv "dotfiles/init" "/opt/dotfiles/"; \
@@ -29,7 +31,9 @@ RUN apk add --no-cache \
     chmod 755 /usr/local/bin/docker-build; \
     chmod 755 /usr/local/bin/print-arch; \
     chmod 755 /usr/local/bin/print-distro; \
+    \
     # --add-dotfiles------------------------------------
+    \
     printf -- "Finshed run...\n";
 
 ENTRYPOINT [ "/opt/dotfiles/docker-scripts/docker-entrypoint.sh" ]

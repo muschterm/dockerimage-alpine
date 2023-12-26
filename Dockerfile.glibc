@@ -1,0 +1,26 @@
+ARG build_version=3.19.0
+FROM muschterm/alpine:${build_version}
+ARG build_suffix=latest
+LABEL maintainer "Matthew Muschter <muschterm@linux.com>"
+
+ENV LANG=en_US.UTF-8
+
+RUN GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${build_suffix}"; \
+    GLIBC_APK_FILENAME="glibc-${build_suffix}.apk"; \
+    GLIBC_BIN_APK_FILENAME="glibc-bin-${build_suffix}.apk"; \
+    GLIBC_I18N_PACKAGE="glibc-i18n"; \
+    GLIBC_I18N_APK_FILENAME="$GLIBC_I18N_PACKAGE-${build_suffix}.apk"; \
+    \
+    curl -so "/etc/apk/keys/sgerrand.rsa.pub" "https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub"; \
+    curl -sLO "$GLIBC_BASE_URL/$GLIBC_APK_FILENAME"; \
+    curl -sLO "$GLIBC_BASE_URL/$GLIBC_BIN_APK_FILENAME"; \
+    curl -sLO "$GLIBC_BASE_URL/$GLIBC_I18N_APK_FILENAME"; \
+    \
+    apk add --no-cache "$GLIBC_APK_FILENAME" "$GLIBC_BIN_APK_FILENAME" "$GLIBC_I18N_APK_FILENAME"; \
+    \
+    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 "$LANG"; \
+    printf -- "export LANG=$LANG\n" > /etc/profile.d/locale.sh; \
+    apk del --no-cache "$GLIBC_I18N_PACKAGE"; \
+    \
+    rm -rf ~/.cache; \
+    rm "/etc/apk/keys/sgerrand.rsa.pub" "$GLIBC_APK_FILENAME" "$GLIBC_BIN_APK_FILENAME" "$GLIBC_I18N_APK_FILENAME";
