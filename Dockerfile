@@ -15,7 +15,10 @@ RUN apk add --no-cache \
     \
     # --add-dotfiles------------------------------------
     \
-    git clone https://github.com/muschterm/dotfiles.git -b main; \
+    git clone --depth 1 https://github.com/muschterm/dotfiles.git -b main; \
+    cd dotfiles; \
+    git reset --hard 513cebb27b8292920d74ef8468912db51c66eaed; \
+    cd ..; \
     mkdir "/opt/dotfiles"; \
     mv "dotfiles/init" "/opt/dotfiles/"; \
     mv "dotfiles/scripts" "/opt/dotfiles/"; \
